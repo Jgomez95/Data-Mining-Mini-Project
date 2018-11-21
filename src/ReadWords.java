@@ -41,7 +41,8 @@ public class ReadWords {
         for (File fileEntry : folder.listFiles()){
             if(fileEntry.isDirectory()){
                 listFilesForFolder(fileEntry);
-            } else {
+            }
+            else {
                 System.out.println(fileEntry.getName());
 
                 // Opening and reading the files will be done here
@@ -58,15 +59,26 @@ public class ReadWords {
                         StringTokenizer st = new StringTokenizer(line);
                         while (st.hasMoreTokens()) {
                             word = st.nextToken().toLowerCase();
-
-                            //Inserting into the ham map if the word already exists
-                            if(ham.containsKey(word)){
-                                ham.put(word, ham.get(word)+1);
-                            } else{
-                                //if word does not already existing int he hashmap
-                                ham.put(word, 1);
-                            }
-
+                                if(fileEntry.getName().contains("spm")){
+                                    if(spamWords.containsKey(word)){
+                                        spamWords.put(word, spamWords.get(word)+1);
+                                        System.out.println("Inserted into spamwords");
+                                    } else{
+                                        //if word does not already existing int he hashmap
+                                        spamWords.put(word, 1);
+                                        System.out.println("Inserted into spamwords");
+                                    }
+                                } else {
+                                    //Inserting into the ham map if the word already exists
+                                    if (ham.containsKey(word)) {
+                                        ham.put(word, ham.get(word) + 1);
+                                        System.out.println("Inserted into ham");
+                                    } else {
+                                        //if word does not already existing int he hashmap
+                                        ham.put(word, 1);
+                                        System.out.println("Inserted into ham");
+                                    }
+                                }
                         }
                     }
                 } catch (NoSuchElementException e){
