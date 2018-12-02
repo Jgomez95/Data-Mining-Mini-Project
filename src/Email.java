@@ -8,4 +8,12 @@ public class Email {
     this.wordList = wordList;
     this.isSpam = isSpam;
   }
+
+  public List<String> getWordList() {
+    return wordList;
+  }
+
+  public boolean getIsSpam() {
+    return isSpam;
+  }
 }
