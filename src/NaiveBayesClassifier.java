@@ -6,6 +6,8 @@ public class NaiveBayesClassifier {
 
   private Map<String, Double> spamWords;
   private Map<String, Double> hamWords;
+  private float spamCount;
+  private float hamCount;
   private List<Email> emailList;
 
   NaiveBayesClassifier(String dirPath) {
@@ -15,14 +17,60 @@ public class NaiveBayesClassifier {
     if (maps != null && emailList != null) {
       this.spamWords = maps.getSpamWords();
       this.hamWords = maps.getHamWords();
+      this.spamCount = maps.getSpamCount();
+      this.hamCount = maps.getHamCount();
       this.emailList = emailList;
     }
+    test();
   }
 
-  NaiveBayesClassifier(Map<String, Double> spamWords, Map<String, Double> hamWords) {
-    this.spamWords = spamWords;
-    this.hamWords = hamWords;
-    classify();
+  private void test() {
+    float spamProbability = 0;
+    float hamProbability = 0;
+    float spamAccuracy = 0;
+    float hamAccuracy = 0;
+    float hamTestCount = 0;
+    float spamTestCount = 0;
+    System.out.println(spamCount + "\t" + hamCount);
+    for (Email e : emailList) {
+      if (e.isSpam) {
+        System.out.println(spamTestCount);
+        spamTestCount++;
+      } else {
+        System.out.println(hamTestCount);
+        hamTestCount++;
+      }
+      for (String word : e.wordList) {
+        if (spamWords.containsKey(word)) {
+          spamProbability += Math.log10(spamWords.get(word) / spamCount);
+        } else{
+          spamProbability += Math.log10(1 / (spamCount + 1));
+        }
+        if (hamWords.containsKey(word)) {
+          hamProbability += Math.log10(hamWords.get(word) / hamCount);
+        } else {
+          hamProbability += Math.log10(1 / (hamCount + 1));
+        }
+      }
+      spamProbability += Math.log10(spamCount / (spamCount + hamCount));
+      hamProbability += Math.log10(spamCount / (spamCount + hamCount));
+      if (spamProbability > hamProbability) {
+        spamAccuracy = e.getIsSpam() ? spamAccuracy++ : spamAccuracy;
+      } else {
+        hamAccuracy = e.getIsSpam() ? hamAccuracy : hamAccuracy++;
+      }
+      spamProbability = 0;
+      hamProbability = 0;
+    }
+
+    //Used to calculate the accuracies
+    int mPercent = (int) ((hamAccuracy / hamTestCount) * 100);
+    int sPercent = (int) ((spamAccuracy / spamTestCount) * 100);
+    int tPercent = (int) (((spamAccuracy + hamAccuracy) / (spamTestCount + hamTestCount)) * 100);
+
+    String s = "------Naive Bayes-----\nMail: " + mPercent + "% Accuracy\nSpam:  " + sPercent + "% Accuracy" + "\nOverall: " + tPercent
+        + "% Accuracy";
+    System.out.println(s);
   }
 
   private void classify() {

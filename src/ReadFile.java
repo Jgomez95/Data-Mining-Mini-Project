@@ -56,6 +56,9 @@ public class ReadFile {
   EmailMaps readTrainData() {
     HashMap<String, Double> spamWords = new HashMap<>();
     HashMap<String, Double> hamWords = new HashMap<>();
+    float spamCount = 0;
+    float hamCount = 0;
+    boolean isSpam = false;
     File folder = new File(dirPath + "/train");
     if (!folder.exists()) {
       System.out.println("Cannot recognize train folder.\n"
@@ -68,6 +71,14 @@ public class ReadFile {
       } catch (FileNotFoundException e) {
         // do nothing
       }
+      if (file.getName().contains("spm")) {
+        spamCount++;
+        isSpam = true;
+      } else {
+        hamCount++;
+        isSpam = false;
+      }
+
       String line;
       String word;
       try {
@@ -75,7 +86,7 @@ public class ReadFile {
           StringTokenizer st = new StringTokenizer(line, "\t\n\r\f,.:;?![]");
           while (st.hasMoreTokens()) {
             word = st.nextToken().toLowerCase();
-            if (file.getName().contains("spm") && !isNumeric(word)) {
+            if (isSpam && !isNumeric(word)) {
               if (spamWords.containsKey(word)) {
                 spamWords.put(word, spamWords.get(word) + 1);
               } else {
@@ -94,7 +105,7 @@ public class ReadFile {
         // do nothing
       }
     }
-    return new EmailMaps(spamWords, hamWords);
+    return new EmailMaps(spamWords, hamWords, spamCount, hamCount);
   }
 
   private boolean isNumeric(String s) {
