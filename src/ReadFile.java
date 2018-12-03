@@ -8,6 +8,10 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+/**
+ * Regex used to get rid of symbols grabbed from:
+ * https://stackoverflow.com/questions/8359566/regex-to-match-symbols
+ */
 public class ReadFile {
 
   private String dirPath;
@@ -38,7 +42,8 @@ public class ReadFile {
       String word;
       try {
         while ((line = in.next()) != null) {
-          StringTokenizer st = new StringTokenizer(line);
+          StringTokenizer st = new StringTokenizer(line, " /[-!$%^&*()_+|~=`{}\\[\\]:\";'<>?,.\\/]/");
+
           while (st.hasMoreTokens()) {
             word = st.nextToken().toLowerCase();
             if (isNumeric(word)) continue;
@@ -83,7 +88,7 @@ public class ReadFile {
       String word;
       try {
         while ((line = in.nextLine()) != null) {
-          StringTokenizer st = new StringTokenizer(line);
+          StringTokenizer st = new StringTokenizer(line, " /[-!$%^&*()_+|~=`{}\\[\\]:\";'<>?,.\\/]/");
           while (st.hasMoreTokens()) {
             word = st.nextToken().toLowerCase();
             if (isSpam && !isNumeric(word)) {

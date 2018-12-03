@@ -15,10 +15,6 @@ public class Main {
     String method = args[0];
     String dirPath = args[1];
     methods(method, dirPath);
-
-
-//    ReadWords readWords = new ReadWords("train");
-//    new NaiveBayesClassifier(readWords.getSpamWords(), readWords.getHamWords());
   }
 
   private static void methods(String method, String dirPath) {
@@ -30,7 +26,6 @@ public class Main {
         break;
       case "NB":
         new NaiveBayesClassifier(dirPath);
-        //new NaiveBayesClassifier(read.getSpamWords(), read.getHamWords());
         break;
       default:
         System.out.printf("%s is not a valid clasifier method...", method);
