@@ -8,6 +8,15 @@ public class NaiveBayesClassifier {
   private Map<String, Double> hamWords;
   private List<Email> emailList;
 
+  NaiveBayesClassifier(String dirPath) {
+    ReadFile read = new ReadFile(dirPath);
+    EmailMaps maps = read.readTrainData();
+    if (maps != null) {
+      this.spamWords = maps.getSpamWords();
+      this.hamWords = maps.getHamWords();
+    }
+  }
+
   NaiveBayesClassifier(Map<String, Double> spamWords, Map<String, Double> hamWords) {
     this.spamWords = spamWords;
     this.hamWords = hamWords;

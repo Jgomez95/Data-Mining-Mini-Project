@@ -22,20 +22,14 @@ public class Main {
   }
 
   private static void methods(String method, String dirPath) {
-    ReadFile read = new ReadFile(dirPath);
     switch (method) {
       case "knn":
         // TODO add kNeighbors as a paramater
         System.out.println("Using KNN");
-        new ClosestNeighbors();
+        //new NearestNeighborsClassifier();
         break;
       case "NB":
-        System.out.println("Using NB");
-        List<Email> list = read.getEmailList();
-        for (Email e :  list) {
-          System.out.println(e.getWordList().size() + "\t" + e.getIsSpam());
-        }
-        System.out.println(list.size());
+        new NaiveBayesClassifier(dirPath);
         //new NaiveBayesClassifier(read.getSpamWords(), read.getHamWords());
         break;
       default:
