@@ -16,4 +16,12 @@ public class Email {
   public boolean getIsSpam() {
     return isSpam;
   }
+
+  public void setWordList(List<String> wordList) {
+    this.wordList = wordList;
+  }
+
+  public void setSpam(boolean spam) {
+    isSpam = spam;
+  }
 }

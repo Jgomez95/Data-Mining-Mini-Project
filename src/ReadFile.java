@@ -12,18 +12,18 @@ public class ReadFile {
 
   private String dirPath;
   private Scanner in;
-  private List<Email> emailList = new ArrayList<>();
 
   public ReadFile(String dirPath) {
     this.dirPath = dirPath;
   }
 
-  void readTestData() {
+  List<Email> readTestData() {
+    List<Email> emailList = new ArrayList<>();
     File folder = new File(dirPath + "/test");
     if (!folder.exists()) {
       System.out.println("Cannot recognize test folder.\n"
           + "Make sure your directory has a test folder. Should look like: " + dirPath +"/test");
-      return;
+      return null;
     }
     ArrayList<String> textWordList;
     for (File file: Objects.requireNonNull(folder.listFiles())) {
@@ -50,6 +50,7 @@ public class ReadFile {
       }
       emailList.add(new Email(textWordList, isSpam));
     }
+    return emailList;
   }
 
   EmailMaps readTrainData() {
@@ -63,7 +64,7 @@ public class ReadFile {
     }
     for (File file : Objects.requireNonNull(folder.listFiles())) {
       try {
-        in = new Scanner(new File(folder + "/"));
+        in = new Scanner(new File("train/" + file.getName()));
       } catch (FileNotFoundException e) {
         // do nothing
       }
@@ -103,9 +104,5 @@ public class ReadFile {
       return false;
     }
     return true;
-  }
-
-  List<Email> getEmailList() {
-    return emailList;
   }
 }

@@ -11,9 +11,11 @@ public class NaiveBayesClassifier {
   NaiveBayesClassifier(String dirPath) {
     ReadFile read = new ReadFile(dirPath);
     EmailMaps maps = read.readTrainData();
-    if (maps != null) {
+    List<Email> emailList = read.readTestData();
+    if (maps != null && emailList != null) {
       this.spamWords = maps.getSpamWords();
       this.hamWords = maps.getHamWords();
+      this.emailList = emailList;
     }
   }
 
@@ -32,10 +34,6 @@ public class NaiveBayesClassifier {
     int hamCount = 0;
     int hamSize = hamWords.size();
     int spamSize = spamWords.size();
-
-    //loop through the files in test and check for every word.
-    ReadWords testdata = new ReadWords();
-    emailList = testdata.getEmailList();
 
     for (Email e : emailList) {
       if (e.isSpam) {
