@@ -57,7 +57,6 @@ public class NaiveBayesClassifier {
 
         spamProbability += emailProbability(trainSpamCount);
         hamProbability += emailProbability(trainHamCount);
-        System.out.printf("%f\t\t%f%n", spamProbability, hamProbability);
       }
       if (spamProbability > hamProbability) {
         spamAccuracy += e.isSpam ? 1 : 0;
