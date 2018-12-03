@@ -38,7 +38,7 @@ public class ReadFile {
       String word;
       try {
         while ((line = in.next()) != null) {
-          StringTokenizer st = new StringTokenizer(line, "\t\n\r\f,.:;?![]'");
+          StringTokenizer st = new StringTokenizer(line);
           while (st.hasMoreTokens()) {
             word = st.nextToken().toLowerCase();
             if (isNumeric(word)) continue;
@@ -83,7 +83,7 @@ public class ReadFile {
       String word;
       try {
         while ((line = in.nextLine()) != null) {
-          StringTokenizer st = new StringTokenizer(line, "\t\n\r\f,.:;?![]");
+          StringTokenizer st = new StringTokenizer(line);
           while (st.hasMoreTokens()) {
             word = st.nextToken().toLowerCase();
             if (isSpam && !isNumeric(word)) {
