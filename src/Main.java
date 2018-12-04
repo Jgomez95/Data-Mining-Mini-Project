@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Main {
 
-  private static String kNeighbors;
+  private static int kNeighbors;
 
   public static void main(String[] args) {
     if (args.length == 0) {
@@ -10,7 +10,7 @@ public class Main {
       System.exit(0);
     }
     if (args.length > 2) {
-      kNeighbors = args[2];
+      kNeighbors = Integer.parseInt(args[2]);
     }
     String method = args[0];
     String dirPath = args[1];
@@ -18,11 +18,10 @@ public class Main {
   }
 
   private static void methods(String method, String dirPath) {
-    switch (method) {
-      case "knn":
-        // TODO add kNeighbors as a paramater
+    switch (method.toUpperCase()) {
+      case "KNN":
         System.out.println("Using KNN");
-        //new NearestNeighborsClassifier();
+        new NearestNeighborsClassifier(dirPath, kNeighbors);
         break;
       case "NB":
         new NaiveBayesClassifier(dirPath);

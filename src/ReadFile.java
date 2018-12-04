@@ -9,8 +9,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
- * Regex used to get rid of symbols grabbed from:
- * https://stackoverflow.com/questions/8359566/regex-to-match-symbols
+ * Regex used to get rid of symbols grabbed from: https://stackoverflow.com/questions/8359566/regex-to-match-symbols
  */
 public class ReadFile {
 
@@ -26,11 +25,11 @@ public class ReadFile {
     File folder = new File(dirPath + "/test");
     if (!folder.exists()) {
       System.out.println("Cannot recognize test folder.\n"
-          + "Make sure your directory has a test folder. Should look like: " + dirPath +"/test");
+          + "Make sure your directory has a test folder. Should look like: " + dirPath + "/test");
       return null;
     }
     ArrayList<String> textWordList;
-    for (File file: Objects.requireNonNull(folder.listFiles())) {
+    for (File file : Objects.requireNonNull(folder.listFiles())) {
       try {
         in = new Scanner(new File("test/" + file.getName()));
       } catch (FileNotFoundException e) {
@@ -42,7 +41,8 @@ public class ReadFile {
       String word;
       try {
         while ((line = in.next()) != null) {
-          StringTokenizer st = new StringTokenizer(line, " /[-!$%^&*()_+|~=`{}\\[\\]:\";'<>?,.\\/]/");
+          StringTokenizer st =
+              new StringTokenizer(line, " /[-!$%^&*()_+|~=`{}\\[\\]:\";'<>?,.\\/]/");
 
           while (st.hasMoreTokens()) {
             word = st.nextToken().toLowerCase();
@@ -67,7 +67,7 @@ public class ReadFile {
     File folder = new File(dirPath + "/train");
     if (!folder.exists()) {
       System.out.println("Cannot recognize train folder.\n"
-          + "Make sure your directory has a train folder. Should look like: " + dirPath +"/train");
+          + "Make sure your directory has a train folder. Should look like: " + dirPath + "/train");
       return null;
     }
     for (File file : Objects.requireNonNull(folder.listFiles())) {
@@ -88,7 +88,8 @@ public class ReadFile {
       String word;
       try {
         while ((line = in.nextLine()) != null) {
-          StringTokenizer st = new StringTokenizer(line, " /[-!$%^&*()_+|~=`{}\\[\\]:\";'<>?,.\\/]/");
+          StringTokenizer st =
+              new StringTokenizer(line, " /[-!$%^&*()_+|~=`{}\\[\\]:\";'<>?,.\\/]/");
           while (st.hasMoreTokens()) {
             word = st.nextToken().toLowerCase();
             if (isSpam && !isNumeric(word)) {
@@ -111,6 +112,37 @@ public class ReadFile {
       }
     }
     return new EmailMaps(spamWords, hamWords, spamCount, hamCount);
+  }
+
+  List<String> readWords() {
+    List<String> wordList = new ArrayList<>();
+    File folder = new File(dirPath + "/train");
+    if (!folder.exists()) {
+      return null;
+    }
+    for (File file : folder.listFiles()) {
+      try {
+        in = new Scanner(new File("train/" + file.getName()));
+      } catch (FileNotFoundException e) {
+        e.printStackTrace();
+      }
+      String line;
+      String word;
+      try {
+        while ((line = in.next()) != null) {
+          StringTokenizer st =
+              new StringTokenizer(line, " /[-!$%^&*()_+|~=`{}\\[\\]:\";'<>?,.\\/]/");
+          while (st.hasMoreTokens()) {
+            word = st.nextToken().toLowerCase();
+            if (isNumeric(word)) continue;
+            wordList.add(word);
+          }
+        }
+      } catch (NoSuchElementException e) {
+        // do nothing
+      }
+    }
+    return wordList;
   }
 
   private boolean isNumeric(String s) {

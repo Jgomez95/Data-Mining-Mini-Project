@@ -27,13 +27,6 @@ public class NaiveBayesClassifier {
     classify();
   }
 
-  private void print() {
-    for (Map.Entry<String, Double> entry : hamWords.entrySet()) {
-      System.out.println(entry.getKey() + ":\t\t\t" + entry.getValue().toString());
-    }
-
-  }
-
   private void classify() {
     double spamCount = 0;
     double hamCount = 0;
