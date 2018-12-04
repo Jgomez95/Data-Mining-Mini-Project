@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
@@ -143,6 +144,47 @@ public class ReadFile {
       }
     }
     return wordList;
+  }
+
+  List<Email> readTrainFrequencies(List<String> wordList) {
+    List<Email> emailList = new ArrayList<>();
+    File folder = new File(dirPath + "/train");
+    if (!folder.exists()) {
+      // TODO upgrade error checking
+      return null;
+    }
+    for (File file : folder.listFiles()) {
+      try {
+        in = new Scanner(new File("train/" + file.getName()));
+      } catch (FileNotFoundException e) {
+        e.printStackTrace();
+      }
+      Map<String, Double> wordMap = new HashMap<>();
+      // insert all the words into the word map and initialize with 0
+      for (String s : wordList) {
+        wordMap.put(s, 0d);
+      }
+      boolean isSpam = file.getName().contains("spm");
+      String line;
+      String word;
+      try {
+        while ((line = in.next()) != null) {
+          StringTokenizer st =
+              new StringTokenizer(line, " /[-!$%^&*()_+|~=`{}\\[\\]:\";'<>?,.\\/]/");
+
+          while (st.hasMoreTokens()) {
+            word = st.nextToken().toLowerCase();
+            if (wordMap.containsKey(word)) {
+              wordMap.put(word, wordMap.get(word) + 1);
+            }
+          }
+        }
+      } catch (NoSuchElementException e) {
+        // do nothing
+      }
+      emailList.add(new Email(isSpam, wordMap));
+    }
+    return emailList;
   }
 
   private boolean isNumeric(String s) {

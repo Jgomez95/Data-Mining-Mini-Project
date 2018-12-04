@@ -11,8 +11,7 @@ public class Email {
     this.isSpam = isSpam;
   }
 
-  public Email(List<String> wordList, boolean isSpam, Map<String, Double> wordMap) {
-    this.wordList = wordList;
+  public Email(boolean isSpam, Map<String, Double> wordMap) {
     this.isSpam = isSpam;
     this.wordMap = wordMap;
   }
