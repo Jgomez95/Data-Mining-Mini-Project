@@ -68,9 +68,6 @@ public class NearestNeighborsClassifier {
       }
       Collections.sort(emailSimilarity);
       test.setClassified(classify(emailSimilarity));
-      System.out.println("original value: " + test.isSpam());
-      System.out.println("classified as: " + classify(emailSimilarity));
-      System.out.println();
     }
   }
 
