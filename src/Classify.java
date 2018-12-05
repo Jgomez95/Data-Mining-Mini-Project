@@ -3,6 +3,12 @@ public class Classify {
 
   private static int kNeighbors;
 
+  /**
+   * Main method is the first one to be executed from the command line. It takes the arguments
+   * and sets variables with their value. It will then pass this parameters
+   * to a different method in order to execute a separate method.
+   * @param args
+   */
   public static void main(String[] args) {
     if (args.length == 0) {
       System.out.println("Please input some arguments for classification...");
@@ -21,6 +27,11 @@ public class Classify {
     methods(method, dirPath);
   }
 
+  /**
+   * Method is in charge of determine what classifying method to run
+   * @param method, either NB or KNN
+   * @param dirPath, the directory path for the test/train folders
+   */
   private static void methods(String method, String dirPath) {
     switch (method.toUpperCase()) {
       case "KNN":

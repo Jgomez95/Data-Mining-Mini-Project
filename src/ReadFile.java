@@ -153,10 +153,6 @@ public class ReadFile {
   List<Email> readFrequencies(List<String> wordList, String path) {
     List<Email> emailList = new ArrayList<>();
     File folder = new File(dirPath + path);
-    if (!folder.exists()) {
-      // TODO upgrade error checking
-      return null;
-    }
     for (File file : folder.listFiles()) {
       try {
         in = new Scanner(file);

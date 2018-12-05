@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -38,19 +37,16 @@ public class NearestNeighborsClassifier {
     for (Email e : testEmailList) {
       if (e.isSpam()) {
         testSpamCount++;
-        if (e.isClassified()) {
+        if (e.classifiedAsSpam()) {
           trainSpamAccuracy++;
         }
       } else {
         testHamCount++;
-        if (!e.isClassified()) {
+        if (!e.classifiedAsSpam()) {
           trainSpamAccuracy++;
         }
       }
     }
-    System.out.println("The accuracy for KNN with " + K + " neighbors is...");
-    System.out.println("Spam: " + (trainSpamAccuracy / testSpamCount));
-    System.out.println("Ham: " + (trainHamAccuracy/ testHamCount));
   }
 
   /**
@@ -61,59 +57,26 @@ public class NearestNeighborsClassifier {
   private void cosineSimilarities() {
     for (Email test : testEmailList) {
       double similarities;
-      List<Double> similaritiesList = new ArrayList<>();
-      Map<Double, Boolean> similaritiesMap = new HashMap<>();
+      List<Email> emailSimilarity = new ArrayList<>();
       for (Email train : trainEmailList) {
         similarities = (dotProduct(test.getWordMap(), train.getWordMap()))
-            / (lenghtOfVector(test.getWordMap()) * lenghtOfVector(train.getWordMap()));
-        similaritiesList.add(similarities);
-        similaritiesMap.put(similarities, train.isSpam());
+            / (lengthOfVector(test.getWordMap()) * lengthOfVector(train.getWordMap()));
+        emailSimilarity.add(new Email(similarities, train.isSpam()));
       }
-      test(similaritiesList);
-      Collections.sort(similaritiesList);
-      List<Double> topK = new ArrayList<>(
-          similaritiesList.subList(similaritiesList.size() - K, similaritiesList.size()));
-      System.out.println(topK);
-      System.out.println(similaritiesList.get(similaritiesList.size() - 3));
-      System.out.println(similaritiesList.get(similaritiesList.size() - 2));
-      System.out.println(similaritiesList.get(similaritiesList.size() - 1));
-
-      test.setClassified(findIsSpam(topK, similaritiesMap, test.isSpam()));
-      break;
+      Collections.sort(emailSimilarity);
+      test.setClassified(classify(emailSimilarity));
+      System.out.println("original value: " + test.isSpam());
+      System.out.println("classified as: " + classify(emailSimilarity));
+      System.out.println();
     }
   }
 
-  void test(List<Double> list) {
-    System.out.println("List size: " + list.size());
-    List<Double> temp = new ArrayList<>();
-    for (Double d : list) {
-      if (!temp.contains(d)) {
-        temp.add(d);
-      }
+  private boolean classify(List<Email> list) {
+    int spam = 0;
+    for (int i = 0; i < K; i++) {
+      spam += list.get(i).isSpam() ? 1 : 0;
     }
-    System.out.println("Temp size: " + temp.size());
-  }
-
-  /**
-   * Method assigns the value of spam or not spam to the test email
-   * @param list of K similarities found
-   * @param map of similarities and their boolean values
-   * @return boolean value determined by K close neighbors.
-   */
-  private boolean findIsSpam(List<Double> list, Map<Double, Boolean> map, boolean original) {
-    int valueTrue = 0;
-    int valueFalse = 0;
-    for (Double d : list) {
-      if (map.get(d)) {
-        valueTrue++;
-      } else {
-        valueFalse++;
-      }
-    }
-    System.out.println("false: " + valueFalse);
-    System.out.println("true: " + valueTrue);
-    System.out.println(original + "\t" + (valueTrue > valueFalse));
-    return valueTrue > valueFalse;
+    return spam > 0;
   }
 
   /**
@@ -140,12 +103,12 @@ public class NearestNeighborsClassifier {
    * @param vector, HashMap with the words and their frequencies
    * @return length of the vector
    */
-  private double lenghtOfVector(Map<String, Double> vector) {
+  private double lengthOfVector(Map<String, Double> vector) {
     double length = 0;
     for (Entry<String, Double> entry : vector.entrySet()) {
       length += entry.getValue() * entry.getValue();
     }
-    return Math.pow(length, 0.5);
+    return Math.sqrt(length);
   }
 
   /**
