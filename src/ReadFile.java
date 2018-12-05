@@ -11,6 +11,9 @@ import java.util.StringTokenizer;
 
 /**
  * Regex used to get rid of symbols grabbed from: https://stackoverflow.com/questions/8359566/regex-to-match-symbols
+ * Class reads the files, it has multiple methods in charge of doing separate things, as reading
+ * all the words in all the training data, creating a hashMap with the training and test data
+ * frequencies
  */
 public class ReadFile {
 

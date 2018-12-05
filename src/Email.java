@@ -4,6 +4,7 @@ import java.util.Map;
 public class Email {
   private List<String> wordList;
   private boolean isSpam;
+  private boolean classified;
   private Map<String, Double> wordMap;
 
   public Email(List<String> wordList, boolean isSpam) {
@@ -16,12 +17,16 @@ public class Email {
     this.wordMap = wordMap;
   }
 
-  public List<String> getWordList() {
-    return wordList;
+  public boolean isClassified() {
+    return classified;
   }
 
-  public void setWordList(List<String> wordList) {
-    this.wordList = wordList;
+  public void setClassified(boolean classified) {
+    this.classified = classified;
+  }
+
+  public List<String> getWordList() {
+    return wordList;
   }
 
   public boolean isSpam() {
@@ -36,7 +41,4 @@ public class Email {
     return wordMap;
   }
 
-  public void setWordMap(Map<String, Double> wordMap) {
-    this.wordMap = wordMap;
-  }
 }

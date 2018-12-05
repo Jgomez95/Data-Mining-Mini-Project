@@ -1,4 +1,3 @@
-import java.util.List;
 
 public class Classify {
 
@@ -9,11 +8,16 @@ public class Classify {
       System.out.println("Please input some arguments for classification...");
       System.exit(0);
     }
+    String method;
+    String dirPath;
     if (args.length > 2) {
-      kNeighbors = Integer.parseInt(args[2]);
+      method = args[0];
+      kNeighbors = Integer.parseInt(args[1]);
+      dirPath = args[2];
+    } else {
+      method = args[0];
+      dirPath = args[1];
     }
-    String method = args[0];
-    String dirPath = args[1];
     methods(method, dirPath);
   }
 

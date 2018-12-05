@@ -13,6 +13,10 @@ public class NaiveBayesClassifier {
   private float trainHamCount;
   private List<Email> emailList;
 
+  /**
+   * Constructor that sets the directory path
+   * @param dirPath
+   */
   NaiveBayesClassifier(String dirPath) {
     ReadFile read = new ReadFile(dirPath);
     EmailMaps maps = read.readTrainData();
@@ -27,6 +31,9 @@ public class NaiveBayesClassifier {
     classify();
   }
 
+  /**
+   * Method in charge of classifying the emails according to their values
+   */
   private void classify() {
     double spamCount = 0;
     double hamCount = 0;
@@ -77,6 +84,11 @@ public class NaiveBayesClassifier {
     return Math.log((wordFrequency + (m * p)) / (numOfEmails + m));
   }
 
+  /**
+   * determines the probability of the email
+   * @param numOfEmails
+   * @return
+   */
   private double emailProbability(double numOfEmails) {
     return Math.log((numOfEmails) / (trainHamCount + trainSpamCount));
   }
