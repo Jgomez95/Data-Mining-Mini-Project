@@ -47,6 +47,9 @@ public class NearestNeighborsClassifier {
         }
       }
     }
+    System.out.println("The accuracy for KNN with " + K + " neighbors is...");
+    System.out.println("Spam: " + (trainSpamAccuracy / testSpamCount) * 100);
+    System.out.println("Ham: " + (trainHamAccuracy/ testHamCount) * 100);
   }
 
   /**
