@@ -35,7 +35,7 @@ public class NaiveBayesClassifier {
     int spamAccuracy = 0;
     int hamAccuracy = 0;
     for (Email e : emailList) {
-      if (e.isSpam) {
+      if (e.isSpam()) {
         spamCount++;
       } else {
         hamCount++;
@@ -52,9 +52,9 @@ public class NaiveBayesClassifier {
         hamProbability += emailProbability(trainHamCount);
       }
       if (spamProbability > hamProbability) {
-        spamAccuracy += e.isSpam ? 1 : 0;
+        spamAccuracy += e.isSpam() ? 1 : 0;
       } else {
-        hamAccuracy += e.isSpam ? 0 : 1;
+        hamAccuracy += e.isSpam() ? 0 : 1;
       }
       spamProbability = 0;
       hamProbability = 0;

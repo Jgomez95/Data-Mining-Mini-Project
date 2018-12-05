@@ -147,9 +147,9 @@ public class ReadFile {
     return wordList;
   }
 
-  List<Email> readTrainFrequencies(List<String> wordList) {
+  List<Email> readFrequencies(List<String> wordList, String path) {
     List<Email> emailList = new ArrayList<>();
-    File folder = new File(dirPath + "/train");
+    File folder = new File(dirPath + path);
     if (!folder.exists()) {
       // TODO upgrade error checking
       return null;

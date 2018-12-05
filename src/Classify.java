@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Main {
+public class Classify {
 
   private static int kNeighbors;
 

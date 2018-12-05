@@ -2,9 +2,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Email {
-  List<String> wordList;
-  boolean isSpam;
-  Map<String, Double> wordMap;
+  private List<String> wordList;
+  private boolean isSpam;
+  private Map<String, Double> wordMap;
 
   public Email(List<String> wordList, boolean isSpam) {
     this.wordList = wordList;
