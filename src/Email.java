@@ -1,6 +1,10 @@
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Object email, contains elements for every possible case scenario when creating a new email
+ * It implements comparable method in order to sort the values.
+ */
 public class Email implements Comparable<Email>{
   private List<String> wordList;
   private boolean isSpam;

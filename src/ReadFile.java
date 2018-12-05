@@ -24,6 +24,11 @@ public class ReadFile {
     this.dirPath = dirPath;
   }
 
+  /**
+   * Reads the test data and generates a list of emails containing a list of words in the email
+   * and if it is a spam or not
+   * @return a list of emails
+   */
   List<Email> readTestData() {
     List<Email> emailList = new ArrayList<>();
     File folder = new File(dirPath + "/test");
@@ -62,6 +67,10 @@ public class ReadFile {
     return emailList;
   }
 
+  /**
+   * Method calculates the maps for the spam and ham words, it determines the word and frequencies
+   * @return EmailMaps Object
+   */
   EmailMaps readTrainData() {
     HashMap<String, Double> spamWords = new HashMap<>();
     HashMap<String, Double> hamWords = new HashMap<>();

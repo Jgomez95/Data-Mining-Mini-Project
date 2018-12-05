@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * Class classifies for KNN
+ */
 public class NearestNeighborsClassifier {
 
   private int K;
