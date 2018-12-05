@@ -32,7 +32,7 @@ public class ReadFile {
     ArrayList<String> textWordList;
     for (File file : Objects.requireNonNull(folder.listFiles())) {
       try {
-        in = new Scanner(new File("test/" + file.getName()));
+        in = new Scanner(file);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
       }
@@ -73,9 +73,10 @@ public class ReadFile {
     }
     for (File file : Objects.requireNonNull(folder.listFiles())) {
       try {
-        in = new Scanner(new File("train/" + file.getName()));
+        in = new Scanner(file);
       } catch (FileNotFoundException e) {
         // do nothing
+        e.printStackTrace();
       }
       if (file.getName().contains("spm")) {
         spamCount++;
@@ -121,9 +122,9 @@ public class ReadFile {
     if (!folder.exists()) {
       return null;
     }
-    for (File file : folder.listFiles()) {
+    for (File file : Objects.requireNonNull(folder.listFiles())) {
       try {
-        in = new Scanner(new File("train/" + file.getName()));
+        in = new Scanner(file);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
       }
@@ -155,7 +156,7 @@ public class ReadFile {
     }
     for (File file : folder.listFiles()) {
       try {
-        in = new Scanner(new File("train/" + file.getName()));
+        in = new Scanner(file);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
       }

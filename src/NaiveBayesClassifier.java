@@ -78,6 +78,6 @@ public class NaiveBayesClassifier {
   }
 
   private double emailProbability(double numOfEmails) {
-    return Math.log((numOfEmails + 1) / (trainHamCount + trainSpamCount + 2));
+    return Math.log((numOfEmails) / (trainHamCount + trainSpamCount));
   }
 }
